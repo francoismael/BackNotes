@@ -40,7 +40,7 @@ export class MongoNoteRepository implements NoteRepository {
 
       async updateNote(note: Note): Promise<Note> {
         const updated = await this.noteModel.findOneAndUpdate(
-            {id: note.id, userId: note.userId},
+            {_id: note.id, userId: note.userId},
             {title: note.title, content: note.content},
             {new: true},
         ).exec();
@@ -55,7 +55,7 @@ export class MongoNoteRepository implements NoteRepository {
 
       async deleteNote(noteId: string, userId: string): Promise<void> {
         const deleted = await this.noteModel.deleteOne({
-          id: noteId,
+          _id: noteId,
           userId: userId,
         }).exec();
       
