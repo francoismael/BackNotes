@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {Body, Controller, Get, Post, Param, Request, UseGuards, Delete, Patch,} from '@nestjs/common';
 import { FindNoteByIdUser } from '../application/usecase/findNoteByIdUser.usecase';
 import { CreateNote } from '../application/usecase/createNote.usecase';

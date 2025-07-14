@@ -14,7 +14,7 @@ export class LoginUsecase {
         private readonly jwtService: JwtService,
     ){}
 
-    async execute(email: string, password: string): Promise<{ acces_token: string}>{
+    async execute(email: string, password: string): Promise<{ access_token: string}>{
         const user = await this.authRepository.findByEmail(email);
         if (!user) throw new UnauthorizedException('user invalid');
 
@@ -24,6 +24,6 @@ export class LoginUsecase {
         const playload = {sub: user.id, email: user.email};
         const token = this.jwtService.sign(playload)
 
-        return { acces_token: token};
+        return { access_token: token};
     }
 }
