@@ -1,5 +1,7 @@
+
+import { SearchNotesByUser } from './../application/usecase/searchNotesByUser.usecase';
 /* eslint-disable prettier/prettier */
-import {Body, Controller, Get, Post, Param, Request, UseGuards, Delete, Patch,} from '@nestjs/common';
+import {Body, Controller, Get, Post, Param, Request, UseGuards, Delete, Patch, Query,} from '@nestjs/common';
 import { FindNoteByIdUser } from '../application/usecase/findNoteByIdUser.usecase';
 import { CreateNote } from '../application/usecase/createNote.usecase';
 import { CreateNoteDto } from './dto/createNote.dto';
@@ -16,7 +18,8 @@ import { FindAllByUser } from '../application/usecase/findAllByUser.usecase';
       private readonly findNoteUsecase: FindNoteByIdUser,
       private readonly updateNoteUsecase: UpdateNotes,
       private readonly deleteNoteUsecase: DeleteNote,
-      private readonly findAllByUser: FindAllByUser
+      private readonly findAllByUser: FindAllByUser,
+      private readonly SearchNotesByUserUsecase: SearchNotesByUser,
     ) {}
   
 
@@ -29,6 +32,13 @@ import { FindAllByUser } from '../application/usecase/findAllByUser.usecase';
         dto.content ?? '',
         req.user.userId,
       );
+    }
+
+
+    @UseGuards(JwtAuthGuard)
+    @Get('search')
+    async Search(@Request() req, @Query('term') keyword: string) {
+    return this.SearchNotesByUserUsecase.execute(req.user.userId, keyword);
     }
   
     @UseGuards(JwtAuthGuard)
@@ -56,5 +66,7 @@ import { FindAllByUser } from '../application/usecase/findAllByUser.usecase';
     return this.findAllByUser.execute(req.user.userId);
     }
 
+
+    
 }
   

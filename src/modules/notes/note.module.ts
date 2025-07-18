@@ -13,6 +13,7 @@ import { NoteSchema } from './infrastructure/schema/note.schema';
 import { FindAllByUser } from './application/usecase/findAllByUser.usecase';
 import { DeleteNote } from './application/usecase/deleteNote.usecase';
 import { UpdateNotes } from './application/usecase/updateNote.usecase';
+import { SearchNotesByUser } from './application/usecase/searchNotesByUser.usecase';
 
 @Module({
   imports: [
@@ -33,9 +34,10 @@ import { UpdateNotes } from './application/usecase/updateNote.usecase';
     FindNoteByIdUser,
     FindAllByUser,
     DeleteNote,
+    SearchNotesByUser,
     UpdateNotes,
-    JwtStrategy,    // 👈 STRATEGY pour décoder le token
-    JwtAuthGuard,   // 👈 GUARD dispo pour le controller
+    JwtStrategy,   
+    JwtAuthGuard,   
   ],
 })
 export class NoteModule {}

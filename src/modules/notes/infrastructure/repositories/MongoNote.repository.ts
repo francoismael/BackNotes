@@ -1,3 +1,4 @@
+import { FindAllByUser } from './../../application/usecase/findAllByUser.usecase';
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { NoteRepository } from "../../application/ports/note.repository.interface";
 import { InjectModel } from "@nestjs/mongoose";
@@ -73,6 +74,16 @@ export class MongoNoteRepository implements NoteRepository {
       }
       
       
+      async searchNotesByUser(userId: string, keyword: string): Promise<Note[]> {
+          const regex = new RegExp(keyword, 'i');
+          const notes = await this.noteModel.find({
+            userId,
+            $or: [
+              {title: {$regex : regex}},
+              {content: {$regex: regex}},
+            ],
+          }).exec();
 
-    
+          return notes.map(n => new Note(n.id.toString(), n.title, n.content, n.userId))
+      }
 }

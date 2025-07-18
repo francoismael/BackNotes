@@ -6,4 +6,5 @@ export interface NoteRepository {
   updateNote(note: Note): Promise<Note>;
   deleteNote(noteId: string, userId: string): Promise<void>;
   findAllByUser(userId: string): Promise<Note[]>;
+  searchNotesByUser(userId: string, keyword: string): Promise<Note[]>;
 }
